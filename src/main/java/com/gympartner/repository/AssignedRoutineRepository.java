@@ -14,4 +14,5 @@ public interface AssignedRoutineRepository extends JpaRepository<AssignedRoutine
 
     @Query("SELECT a.routine FROM AssignedRoutine a WHERE a.client.id = ?1")
     List<Routine> findAllRoutinesByClientIdJPQL(Long clientId);
+    
 }
