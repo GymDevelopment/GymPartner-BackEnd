@@ -35,16 +35,12 @@ public class Client {
 
     @Column(name = "personalGoal", nullable = false)
     private String personalGoal;
-
     @Column(name = "birthDate", nullable = false)
     private Date birthDate;
-
     @Column(name = "physicalState", length = 50, nullable = false)
     private String physicalState;
-
     @Column(name = "tall", nullable = false)
     private Integer tall;
-
     @Column(name = "weight", nullable = false)
     private Integer weight;
 

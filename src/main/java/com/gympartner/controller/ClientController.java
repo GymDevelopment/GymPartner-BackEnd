@@ -16,8 +16,10 @@ import java.util.List;
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
+
     @Autowired
     private CoachRepository coachRepository;
+
     @PostMapping("/clients")
     public ResponseEntity<Client> createClient(@RequestBody Client client){
         Client newClient = clientRepository.save(client);
