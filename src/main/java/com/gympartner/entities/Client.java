@@ -19,13 +19,10 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "name", length = 50, nullable = false)
     private String name;
-
     @Column(name = "lastName", length = 50, nullable = false)
     private String lastName;
-
     @ManyToOne
     @JoinColumn(name = "gym_id", nullable = false)
     //@JsonIgnore

@@ -39,10 +39,12 @@ public class AssignedDiet {
     private String day;
 
     public AssignedDiet(Diet diet, Client client, Date date, Boolean done, String day) {
+
         this.diet = diet;
         this.client = client;
         this.date = date;
         this.done = done;
         this.day = day;
+
     }
 }

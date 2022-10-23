@@ -23,19 +23,19 @@ public class ClientController {
         Client newClient = clientRepository.save(client);
         return new ResponseEntity<>(newClient, HttpStatus.CREATED);
     }
+    @GetMapping("/coaches/{coachId}/clients")
+    public ResponseEntity<List<Client>> getAllClientByCoachId(@PathVariable("coachId") Long coachId){
+        if(!coachRepository.existsById(coachId)){
+            throw new ResourceNotFoundException("Not found coach with id = " + coachId);
+        }
+        List<Client> clients = clientRepository.findByCoachId(coachId);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
+    }
     @GetMapping("/clients/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable("id") Long id){
         Client newClient = clientRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Not found client with id = " + id));
         return new ResponseEntity<>(newClient, HttpStatus.OK);
-    }
-    @GetMapping("/coaches/{coachId}/clients")
-    public ResponseEntity<List<Client>> getAllClientByCoachId(@PathVariable("coachId") Long coachId){
-       if(!coachRepository.existsById(coachId)){
-            throw new ResourceNotFoundException("Not found coach with id = " + coachId);
-       }
-        List<Client> clients = clientRepository.findByCoachId(coachId);
-        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
 }
