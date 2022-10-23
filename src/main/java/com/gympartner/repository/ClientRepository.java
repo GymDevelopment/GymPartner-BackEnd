@@ -9,4 +9,5 @@ import java.util.List;
 public interface ClientRepository extends JpaRepository<Client, Long> {
     @Transactional(readOnly = true)
     List<Client> findByCoachId(Long coachId);
+    
 }
