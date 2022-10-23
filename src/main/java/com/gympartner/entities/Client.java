@@ -27,7 +27,6 @@ public class Client {
     @JoinColumn(name = "gym_id", nullable = false)
     //@JsonIgnore
     private Gym gym;
-
     @Column(name = "password", length = 20, nullable = false)
     private String password;
 
