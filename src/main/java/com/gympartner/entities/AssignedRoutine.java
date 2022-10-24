@@ -8,12 +8,14 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+
 @Setter
 @Getter
 @ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "assigned_routines")
+
 public class AssignedRoutine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,7 @@ public class AssignedRoutine {
 
     @Column(name = "duration", nullable = false)
     private Integer duration;
+
 
     public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration) {
         this.routine = routine;
