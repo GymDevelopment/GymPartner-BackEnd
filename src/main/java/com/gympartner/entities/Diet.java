@@ -37,6 +37,7 @@ public class Diet {
     @JoinColumn(name = "coach_id", nullable = false)
     private Coach coach;
 
+
     public Diet(String name, String meal, String indication, Integer calories, Integer hour, Coach coach) {
         this.name = name;
         this.meal = meal;
@@ -44,5 +45,6 @@ public class Diet {
         this.calories = calories;
         this.hour = hour;
         this.coach = coach;
+
     }
 }
