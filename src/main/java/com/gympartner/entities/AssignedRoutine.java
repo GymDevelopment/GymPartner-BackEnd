@@ -8,7 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-
 @Setter
 @Getter
 @ToString
@@ -36,7 +35,6 @@ public class AssignedRoutine {
 
     @Column(name = "duration", nullable = false)
     private Integer duration;
-
 
     public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration) {
         this.routine = routine;
