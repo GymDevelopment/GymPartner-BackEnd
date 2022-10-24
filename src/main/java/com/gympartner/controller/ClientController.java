@@ -34,8 +34,12 @@ public class ClientController {
        if(!coachRepository.existsById(coachId)){
             throw new ResourceNotFoundException("Not found coach with id = " + coachId);
        }
-        List<Client> clients = clientRepository.findAllClientByCoachIdSQL(coachId);
+        List<Client> clients = clientRepository.findAllClientByCoachIdJPQL(coachId);
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
-
+    @GetMapping("/clients")
+    public ResponseEntity<List<Client>> getAllClients(){
+        List<Client> clients= clientRepository.findAll();
+        return new ResponseEntity<>(clients, HttpStatus.OK);
+    }
 }
