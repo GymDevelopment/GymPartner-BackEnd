@@ -16,12 +16,22 @@ import java.util.List;
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
+
     @Autowired
     private CoachRepository coachRepository;
+
     @PostMapping("/clients")
     public ResponseEntity<Client> createClient(@RequestBody Client client){
         Client newClient = clientRepository.save(client);
         return new ResponseEntity<>(newClient, HttpStatus.CREATED);
+    }
+    @GetMapping("/coaches/{coachId}/clients")
+    public ResponseEntity<List<Client>> getAllClientByCoachId(@PathVariable("coachId") Long coachId){
+        if(!coachRepository.existsById(coachId)){
+            throw new ResourceNotFoundException("Not found coach with id = " + coachId);
+        }
+        List<Client> clients = clientRepository.findByCoachId(coachId);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
     @GetMapping("/clients/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable("id") Long id){
@@ -29,6 +39,7 @@ public class ClientController {
                 .orElseThrow(()-> new ResourceNotFoundException("Not found client with id = " + id));
         return new ResponseEntity<>(newClient, HttpStatus.OK);
     }
+<<<<<<< HEAD
     @GetMapping("/coaches/{coachId}/clients")
     public ResponseEntity<List<Client>> getAllClientByCoachId(@PathVariable("coachId") Long coachId){
        if(!coachRepository.existsById(coachId)){
@@ -42,4 +53,7 @@ public class ClientController {
         List<Client> clients= clientRepository.findAll();
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
+=======
+
+>>>>>>> 5f17c6de792cd891771354a297f3de9b9edcae91
 }

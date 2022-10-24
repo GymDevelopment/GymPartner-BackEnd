@@ -19,6 +19,7 @@ public class Routine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
@@ -42,6 +43,7 @@ public class Routine {
     @Column(name = "calories", nullable = false)
     private Integer calories;
 
+
     public Routine(String name, String description, String indication, String tips, String url, Coach coach, Integer calories) {
         this.name = name;
         this.description = description;
@@ -50,5 +52,6 @@ public class Routine {
         this.url = url;
         this.coach = coach;
         this.calories = calories;
+
     }
 }

@@ -19,18 +19,14 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "name", length = 50, nullable = false)
     private String name;
-
     @Column(name = "lastName", length = 50, nullable = false)
     private String lastName;
-
     @ManyToOne
     @JoinColumn(name = "gym_id", nullable = false)
     //@JsonIgnore
     private Gym gym;
-
     @Column(name = "password", length = 20, nullable = false)
     private String password;
 
@@ -39,16 +35,12 @@ public class Client {
 
     @Column(name = "personalGoal", nullable = false)
     private String personalGoal;
-
     @Column(name = "birthDate", nullable = false)
     private Date birthDate;
-
     @Column(name = "physicalState", length = 50, nullable = false)
     private String physicalState;
-
     @Column(name = "tall", nullable = false)
     private Integer tall;
-
     @Column(name = "weight", nullable = false)
     private Integer weight;
 

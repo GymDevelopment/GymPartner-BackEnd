@@ -14,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "assigned_routines")
+
 public class AssignedRoutine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
