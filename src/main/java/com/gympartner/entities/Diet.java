@@ -33,18 +33,21 @@ public class Diet {
     @Column(name = "hour", nullable = false)
     private Integer hour;
 
+    @Column(name = "meal_type", nullable = false)
+    private String mealType;
+
     @ManyToOne
     @JoinColumn(name = "coach_id", nullable = false)
     private Coach coach;
 
 
-    public Diet(String name, String meal, String indication, Integer calories, Integer hour, Coach coach) {
+    public Diet(String name, String meal, String indication, Integer calories, Integer hour, String mealType, Coach coach) {
         this.name = name;
         this.meal = meal;
         this.indication = indication;
         this.calories = calories;
         this.hour = hour;
+        this.mealType = mealType;
         this.coach = coach;
-
     }
 }

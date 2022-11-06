@@ -28,6 +28,7 @@ public class AssignedDietController {
         List<AssignedDiet> assignedDiets = assignedDietRepository.findByClientId(clientId);
         return new ResponseEntity<>(assignedDiets, HttpStatus.OK);
     }
+/*
     @GetMapping("/clients/{clientId}/diet")
     public ResponseEntity<List<Diet>> getAllDietsByClientId(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){
@@ -36,6 +37,7 @@ public class AssignedDietController {
         List<Diet> diets = assignedDietRepository.findAllDietsByClientIdJPQL(clientId);
         return new ResponseEntity<>(diets, HttpStatus.OK);
     }
+ */
     @PostMapping("/assignedDiets")
     public ResponseEntity<AssignedDiet> createAssignedDiet(@RequestBody AssignedDiet assignedDiet){
         AssignedDiet newAssignedDiet = assignedDietRepository.save(assignedDiet);

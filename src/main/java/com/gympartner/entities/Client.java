@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Setter
@@ -21,7 +22,7 @@ public class Client {
     private Long id;
     @Column(name = "name", length = 50, nullable = false)
     private String name;
-    @Column(name = "lastName", length = 50, nullable = false)
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
     @ManyToOne
     @JoinColumn(name = "gym_id", nullable = false)
@@ -33,11 +34,11 @@ public class Client {
     @Column(name = "email", length = 50, nullable = false)
     private String email;
 
-    @Column(name = "personalGoal", nullable = false)
+    @Column(name = "personal_goal", nullable = false)
     private String personalGoal;
-    @Column(name = "birthDate", nullable = false)
-    private Date birthDate;
-    @Column(name = "physicalState", length = 50, nullable = false)
+    @Column(name = "birthdate", nullable = false, columnDefinition = "DATE")
+    private LocalDateTime birthDate;
+    @Column(name = "physical_state", length = 50, nullable = false)
     private String physicalState;
     @Column(name = "tall", nullable = false)
     private Integer tall;
@@ -52,7 +53,7 @@ public class Client {
     @Column(name = "phone", length = 12, nullable = false)
     private String phone;
 
-    public Client(String name, String lastName, Gym gym, String password, String email, String personalGoal, Date birthDate, String physicalState, Integer tall, Integer weight, Coach coach, String phone) {
+    public Client(String name, String lastName, Gym gym, String password, String email, String personalGoal, LocalDateTime birthDate, String physicalState, Integer tall, Integer weight, Coach coach, String phone) {
         this.name = name;
         this.lastName = lastName;
         this.gym = gym;

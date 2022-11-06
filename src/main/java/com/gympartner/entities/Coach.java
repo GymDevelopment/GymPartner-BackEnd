@@ -22,7 +22,7 @@ public class Coach {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "lastName", length = 50, nullable = false)
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
     @Column(name = "password", length = 20, nullable = false)

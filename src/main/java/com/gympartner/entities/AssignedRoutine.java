@@ -31,21 +31,24 @@ public class AssignedRoutine {
     @JoinColumn(name = "client_id", nullable = false)
     //@JsonIgnore
     private Client client;
-
+    @ManyToOne
+    @JoinColumn(name = "coach_id", nullable = false)
+    private Coach coach;
     @Column(name = "done", nullable = false)
     private Boolean done;
 
-    @Column(name = "date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
-
+    //@Column(name = "date", nullable = false)
+    //@Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date", nullable = false, columnDefinition = "DATE")
+    private LocalDateTime date;
 
     @Column(name = "duration", nullable = false)
     private Integer duration;
 
-    public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration, Date date) {
+    public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration, LocalDateTime date,  Coach coach) {
         this.routine = routine;
         this.client = client;
+        this.coach = coach;
         this.done = done;
         this.duration = duration;
         this.date = date;
