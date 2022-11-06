@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -27,19 +29,25 @@ public class AssignedRoutine {
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonIgnore
+    //@JsonIgnore
     private Client client;
 
     @Column(name = "done", nullable = false)
     private Boolean done;
 
+    @Column(name = "date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
+
     @Column(name = "duration", nullable = false)
     private Integer duration;
 
-    public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration) {
+    public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration, Date date) {
         this.routine = routine;
         this.client = client;
         this.done = done;
         this.duration = duration;
+        this.date = date;
     }
 }

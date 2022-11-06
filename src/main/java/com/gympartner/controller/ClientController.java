@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class ClientController {
@@ -39,21 +39,10 @@ public class ClientController {
                 .orElseThrow(()-> new ResourceNotFoundException("Not found client with id = " + id));
         return new ResponseEntity<>(newClient, HttpStatus.OK);
     }
-<<<<<<< HEAD
-    @GetMapping("/coaches/{coachId}/clients")
-    public ResponseEntity<List<Client>> getAllClientByCoachId(@PathVariable("coachId") Long coachId){
-       if(!coachRepository.existsById(coachId)){
-            throw new ResourceNotFoundException("Not found coach with id = " + coachId);
-       }
-        List<Client> clients = clientRepository.findAllClientByCoachIdJPQL(coachId);
-        return new ResponseEntity<>(clients, HttpStatus.OK);
-    }
     @GetMapping("/clients")
     public ResponseEntity<List<Client>> getAllClients(){
         List<Client> clients= clientRepository.findAll();
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
-=======
 
->>>>>>> 5f17c6de792cd891771354a297f3de9b9edcae91
 }

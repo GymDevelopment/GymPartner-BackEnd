@@ -8,13 +8,11 @@ import com.gympartner.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class AssignedRoutineController {
@@ -39,5 +37,37 @@ public class AssignedRoutineController {
         }
         List<Routine> routines = assignedRoutineRepository.findAllRoutinesByClientIdJPQL(clientId);
         return new ResponseEntity<>(routines, HttpStatus.OK);
+    }
+
+    @PostMapping("/assignedRoutines")
+    public ResponseEntity<AssignedRoutine> createAssignedRoutine(@RequestBody AssignedRoutine assignedRoutine){
+        AssignedRoutine newAssignedRoutine = assignedRoutineRepository.save(assignedRoutine);
+        return new ResponseEntity<>(newAssignedRoutine, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/clients/{clientId}/routineToday")
+    public ResponseEntity<List<Routine>> getAllRoutinesByClientIdToday(@PathVariable("clientId") Long clientId){
+        if(!clientRepository.existsById(clientId)){
+            throw new ResourceNotFoundException("No found client with id = " + clientId);
+        }
+        //List<Routine> routines = assignedRoutineRepository.findAllRoutinesByClientIdJPQLToday(clientId, LocalDate.now());
+        List<Routine> routines = assignedRoutineRepository.findAllRoutinesByClientIdJPQLToday(clientId);
+        return new ResponseEntity<>(routines, HttpStatus.OK);
+    }
+    @GetMapping("/clients/{clientId}/todayAssignedRoutines")
+    public ResponseEntity<List<AssignedRoutine>> getAllTodayAssignedRoutinesByClientId(@PathVariable("clientId") Long clientId){
+        if(!clientRepository.existsById(clientId)){
+            throw new ResourceNotFoundException("No found client with id = " + clientId);
+        }
+        List<AssignedRoutine> assignedRoutines = assignedRoutineRepository.findAllTodayAssignedRoutinesByClientIdJPQL(clientId);
+        return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
+    }
+    @GetMapping("/clients/{clientId}/futureAssignedRoutines")
+    public ResponseEntity<List<AssignedRoutine>> getAllFutureAssignedRoutinesByClientId(@PathVariable("clientId") Long clientId){
+        if(!clientRepository.existsById(clientId)){
+            throw new ResourceNotFoundException("No found client with id = " + clientId);
+        }
+        List<AssignedRoutine> assignedRoutines = assignedRoutineRepository.findAllFutureAssignedRoutinesByClientIdJPQL(clientId);
+        return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
     }
 }

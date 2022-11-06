@@ -8,13 +8,10 @@ import com.gympartner.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class AssignedDietController {
@@ -38,5 +35,10 @@ public class AssignedDietController {
         }
         List<Diet> diets = assignedDietRepository.findAllDietsByClientIdJPQL(clientId);
         return new ResponseEntity<>(diets, HttpStatus.OK);
+    }
+    @PostMapping("/assignedDiets")
+    public ResponseEntity<AssignedDiet> createAssignedDiet(@RequestBody AssignedDiet assignedDiet){
+        AssignedDiet newAssignedDiet = assignedDietRepository.save(assignedDiet);
+        return new ResponseEntity<>(newAssignedDiet, HttpStatus.CREATED);
     }
 }

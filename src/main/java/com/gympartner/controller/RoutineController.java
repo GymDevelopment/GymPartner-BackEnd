@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api")
 public class RoutineController {
@@ -23,5 +23,11 @@ public class RoutineController {
     public ResponseEntity<List<Routine>> getAllRoutines(){
         List<Routine> routines = routineRepository.findAll();
         return new ResponseEntity<>(routines, HttpStatus.OK);
+    }
+
+    @PutMapping("/routines/{id}")
+    public ResponseEntity<Routine> updateRoutine(@PathVariable("id") Long id, @RequestBody Routine routine){
+        Routine newRoutine = routineRepository.save(routine);
+        return new ResponseEntity<>(newRoutine, HttpStatus.OK);
     }
 }

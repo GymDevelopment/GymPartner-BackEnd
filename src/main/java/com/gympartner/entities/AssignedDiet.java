@@ -21,12 +21,12 @@ public class AssignedDiet {
 
     @ManyToOne
     @JoinColumn(name = "diet_id", nullable = false)
-    @JsonIgnore
+    //@JsonIgnore
     private Diet diet;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonIgnore
+    //@JsonIgnore
     private Client client;
 
     @Column(name = "date", nullable = false)
