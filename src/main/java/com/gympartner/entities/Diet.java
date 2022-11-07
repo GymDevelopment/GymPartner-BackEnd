@@ -21,7 +21,7 @@ public class Diet {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "meal", length = 20, nullable = false)
+    @Column(name = "meal", nullable = false)
     private String meal;
 
     @Column(name = "indication", nullable = false)
