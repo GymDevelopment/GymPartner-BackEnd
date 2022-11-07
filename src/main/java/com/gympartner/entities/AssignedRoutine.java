@@ -1,5 +1,6 @@
 package com.gympartner.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -40,12 +42,13 @@ public class AssignedRoutine {
     //@Column(name = "date", nullable = false)
     //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = false, columnDefinition = "DATE")
-    private LocalDateTime date;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate date;
 
     @Column(name = "duration", nullable = false)
     private Integer duration;
 
-    public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration, LocalDateTime date,  Coach coach) {
+    public AssignedRoutine(Routine routine, Client client, Boolean done, Integer duration, LocalDate date,  Coach coach) {
         this.routine = routine;
         this.client = client;
         this.coach = coach;

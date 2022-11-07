@@ -1,7 +1,9 @@
 package com.gympartner.entities;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 @Setter
@@ -31,15 +33,15 @@ public class AssignedDiet {
     //@JsonIgnore
     private Client client;
     //@Column(name = "date", nullable = false)
-
     @Column(name = "date", nullable = false, columnDefinition = "DATE")
-    private LocalDateTime date;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "coach_id", nullable = false)
     private Coach coach;
     @Column(name = "done", nullable = false)
     private Boolean done;
-    public AssignedDiet(Diet breakfast, Diet lunch, Diet dinner,  Client client, Coach coach, LocalDateTime date, Boolean done) {
+    public AssignedDiet(Diet breakfast, Diet lunch, Diet dinner,  Client client, Coach coach, LocalDate date, Boolean done) {
         this.breakfast = breakfast;
         this.lunch = lunch;
         this.dinner = dinner;

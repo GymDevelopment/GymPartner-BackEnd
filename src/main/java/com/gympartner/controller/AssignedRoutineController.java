@@ -38,13 +38,23 @@ public class AssignedRoutineController {
         List<Routine> routines = assignedRoutineRepository.findAllRoutinesByClientIdJPQL(clientId);
         return new ResponseEntity<>(routines, HttpStatus.OK);
     }
+    @GetMapping("/assignedRoutines/{id}")
+    public ResponseEntity<AssignedRoutine> getAssignedRoutineById(@PathVariable("id") Long id){
+        AssignedRoutine assignedRoutine = assignedRoutineRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("No found assignedRoutine with id = " + id));
+        return new ResponseEntity<>(assignedRoutine, HttpStatus.OK);
+    }
 
     @PostMapping("/assignedRoutines")
     public ResponseEntity<AssignedRoutine> createAssignedRoutine(@RequestBody AssignedRoutine assignedRoutine){
         AssignedRoutine newAssignedRoutine = assignedRoutineRepository.save(assignedRoutine);
         return new ResponseEntity<>(newAssignedRoutine, HttpStatus.CREATED);
     }
-
+    @PutMapping("/assignedRoutines/{id}")
+    public ResponseEntity<AssignedRoutine> updateAssignedRoutine(@PathVariable("id") Long id, @RequestBody AssignedRoutine assignedRoutine){
+        AssignedRoutine newAssignedRoutine = assignedRoutineRepository.save(assignedRoutine);
+        return new ResponseEntity<>(newAssignedRoutine, HttpStatus.OK);
+    }
     @GetMapping("/clients/{clientId}/routineToday")
     public ResponseEntity<List<Routine>> getAllRoutinesByClientIdToday(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){

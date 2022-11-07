@@ -24,7 +24,7 @@ public interface AssignedRoutineRepository extends JpaRepository<AssignedRoutine
     @Query("SELECT a.routine FROM AssignedRoutine a WHERE a.client.id = ?1 and a.done = false")
     List<Routine> findAllRoutinesByClientIdJPQLToday(Long clientId);
 
-    @Query("SELECT a FROM AssignedRoutine a WHERE a.client.id = ?1 and cast(a.date as date) = current_date and a.done = false")
+    @Query("SELECT a FROM AssignedRoutine a WHERE a.client.id = ?1 and a.date = current_date and a.done = false")
     List<AssignedRoutine> findAllTodayAssignedRoutinesByClientIdJPQL(Long clientId);
     @Query("SELECT a FROM AssignedRoutine a WHERE a.client.id = ?1 and cast(a.date as date) > current_date")
     List<AssignedRoutine> findAllFutureAssignedRoutinesByClientIdJPQL(Long clientId);
