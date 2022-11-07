@@ -1,6 +1,7 @@
 package com.gympartner.controller;
 
 import com.gympartner.entities.Routine;
+import com.gympartner.exception.ResourceNotFoundException;
 import com.gympartner.repository.RoutineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,17 @@ public class RoutineController {
     @GetMapping("/routines")
     public ResponseEntity<List<Routine>> getAllRoutines(){
         List<Routine> routines = routineRepository.findAll();
+        return new ResponseEntity<>(routines, HttpStatus.OK);
+    }
+    @GetMapping("/routines/{id}")
+    public ResponseEntity<Routine> getRoutineById(@PathVariable("id") Long id){
+        Routine routines = routineRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Not found routine with id = " + id));
+        return new ResponseEntity<>(routines, HttpStatus.OK);
+    }
+    @GetMapping("/coaches/{coachId}/routines")
+    public ResponseEntity<List<Routine>> getAllRoutinesByCoach( @PathVariable("coachId") Long coachId){
+        List<Routine> routines = routineRepository.findByCoachId(coachId);
         return new ResponseEntity<>(routines, HttpStatus.OK);
     }
 

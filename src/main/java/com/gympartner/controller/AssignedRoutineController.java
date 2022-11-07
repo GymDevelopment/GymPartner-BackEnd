@@ -1,10 +1,12 @@
 package com.gympartner.controller;
 
 import com.gympartner.entities.AssignedRoutine;
+import com.gympartner.entities.Client;
 import com.gympartner.entities.Routine;
 import com.gympartner.exception.ResourceNotFoundException;
 import com.gympartner.repository.AssignedRoutineRepository;
 import com.gympartner.repository.ClientRepository;
+import com.gympartner.repository.RoutineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ public class AssignedRoutineController {
     private AssignedRoutineRepository assignedRoutineRepository;
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private RoutineRepository routineRepository;
 
     @GetMapping("/clients/{clientId}/assignedRoutine")
     public ResponseEntity<List<AssignedRoutine>> getAllAssignedRoutinesByClientId(@PathVariable("clientId") Long clientId){
@@ -37,6 +41,14 @@ public class AssignedRoutineController {
         }
         List<Routine> routines = assignedRoutineRepository.findAllRoutinesByClientIdJPQL(clientId);
         return new ResponseEntity<>(routines, HttpStatus.OK);
+    }
+    @GetMapping("/routines/{routineId}/client")
+    public ResponseEntity<List<Client>> getAllClientsByRoutineId(@PathVariable("routineId") Long routineId){
+        if(!routineRepository.existsById(routineId)){
+            throw new ResourceNotFoundException("No found routine with id = " + routineId);
+        }
+        List<Client> clients = assignedRoutineRepository.findAllClientsByRoutineIdJPQL(routineId);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
     @GetMapping("/assignedRoutines/{id}")
     public ResponseEntity<AssignedRoutine> getAssignedRoutineById(@PathVariable("id") Long id){

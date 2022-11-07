@@ -1,6 +1,7 @@
 package com.gympartner.repository;
 
 import com.gympartner.entities.AssignedRoutine;
+import com.gympartner.entities.Client;
 import com.gympartner.entities.Routine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,9 @@ public interface AssignedRoutineRepository extends JpaRepository<AssignedRoutine
 
     @Query("SELECT a.routine FROM AssignedRoutine a WHERE a.client.id = ?1")
     List<Routine> findAllRoutinesByClientIdJPQL(Long clientId);
+
+    @Query("SELECT a.client FROM AssignedRoutine a WHERE a.routine.id = ?1")
+    List<Client> findAllClientsByRoutineIdJPQL(Long routineId);
 
 
     @Query("SELECT a.routine FROM AssignedRoutine a WHERE a.client.id = ?1 and a.done = false")
