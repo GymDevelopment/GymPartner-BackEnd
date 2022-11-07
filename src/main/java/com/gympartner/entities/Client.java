@@ -36,8 +36,8 @@ public class Client {
 
     @Column(name = "personal_goal", nullable = false)
     private String personalGoal;
-    @Column(name = "birthdate", nullable = false, columnDefinition = "DATE")
-    private LocalDateTime birthDate;
+    @Column(name = "birthday", nullable = false, columnDefinition = "DATE")
+    private LocalDateTime birthday;
     @Column(name = "physical_state", length = 50, nullable = false)
     private String physicalState;
     @Column(name = "tall", nullable = false)
@@ -53,14 +53,14 @@ public class Client {
     @Column(name = "phone", length = 12, nullable = false)
     private String phone;
 
-    public Client(String name, String lastName, Gym gym, String password, String email, String personalGoal, LocalDateTime birthDate, String physicalState, Integer tall, Integer weight, Coach coach, String phone) {
+    public Client(String name, String lastName, Gym gym, String password, String email, String personalGoal, LocalDateTime birthday, String physicalState, Integer tall, Integer weight, Coach coach, String phone) {
         this.name = name;
         this.lastName = lastName;
         this.gym = gym;
         this.password = password;
         this.email = email;
         this.personalGoal = personalGoal;
-        this.birthDate = birthDate;
+        this.birthday = birthday;
         this.physicalState = physicalState;
         this.tall = tall;
         this.weight = weight;
