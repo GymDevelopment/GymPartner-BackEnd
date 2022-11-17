@@ -7,12 +7,18 @@ import com.gympartner.exception.ResourceNotFoundException;
 import com.gympartner.repository.AssignedRoutineRepository;
 import com.gympartner.repository.ClientRepository;
 import com.gympartner.repository.RoutineRepository;
+import com.gympartner.util.AssignedRoutineExcelExporter;
+import com.gympartner.util.GymExcelExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -92,4 +98,31 @@ public class AssignedRoutineController {
         List<AssignedRoutine> assignedRoutines = assignedRoutineRepository.findAllFutureAssignedRoutinesByClientIdJPQL(clientId);
         return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
     }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/assignedRoutine/export/excel/{clientId}")
+    public void exportToExcel(HttpServletResponse response, @PathVariable("clientId") Long clientId) throws IOException {
+
+        response.setContentType("application/octet-stream");
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=result_assigned_routines";
+        response.setHeader(headerKey, headerValue);
+
+        List<AssignedRoutine> assignedRoutines = assignedRoutineRepository.findByClientId(clientId);
+
+        AssignedRoutineExcelExporter excelExporter = new AssignedRoutineExcelExporter(assignedRoutines);
+
+        excelExporter.export(response);
+    }
+
+
+    @Transactional (readOnly = true)
+    @GetMapping("/clients/{clientId}/assignedRoutine/search/date")
+    public ResponseEntity<List<AssignedRoutine>> searchByDates(@PathVariable("clientId") Long clientId, @RequestParam(value = "date1") String date1, @RequestParam(value = "date2") String date2){
+        List<AssignedRoutine> consults =assignedRoutineRepository.searchByDates(
+                clientId, LocalDate.parse(date1), LocalDate.parse(date2));
+        return new ResponseEntity<>(consults, HttpStatus.OK);
+    }
+
 }

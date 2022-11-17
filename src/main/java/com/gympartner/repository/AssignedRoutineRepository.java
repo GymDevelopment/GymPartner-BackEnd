@@ -5,9 +5,11 @@ import com.gympartner.entities.Client;
 import com.gympartner.entities.Routine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,4 +34,10 @@ public interface AssignedRoutineRepository extends JpaRepository<AssignedRoutine
     List<AssignedRoutine> findAllTodayAssignedRoutinesByClientIdJPQL(Long clientId);
     @Query("SELECT a FROM AssignedRoutine a WHERE a.client.id = ?1 and cast(a.date as date) > current_date")
     List<AssignedRoutine> findAllFutureAssignedRoutinesByClientIdJPQL(Long clientId);
+
+    @Query("FROM AssignedRoutine a WHERE a.client.id = :clientId AND a.date BETWEEN :date1 AND :date2")
+    List<AssignedRoutine> searchByDates(@Param("clientId") Long clientId ,@Param("date1") LocalDate date1, @Param("date2") LocalDate date2);
+
+
+
 }
