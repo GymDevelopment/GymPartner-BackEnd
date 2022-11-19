@@ -25,12 +25,13 @@ public class ClientController {
 
     @Autowired
     private CoachRepository coachRepository;
-
+    @Transactional
     @PostMapping("/clients")
     public ResponseEntity<Client> createClient(@RequestBody Client client){
         Client newClient = clientRepository.save(client);
         return new ResponseEntity<>(newClient, HttpStatus.CREATED);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/coaches/{coachId}/clients")
     public ResponseEntity<List<Client>> getAllClientByCoachId(@PathVariable("coachId") Long coachId){
         if(!coachRepository.existsById(coachId)){
@@ -39,12 +40,14 @@ public class ClientController {
         List<Client> clients = clientRepository.findByCoachId(coachId);
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/clients/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable("id") Long id){
         Client newClient = clientRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Not found client with id = " + id));
         return new ResponseEntity<>(newClient, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/clients")
     public ResponseEntity<List<Client>> getAllClients(){
         List<Client> clients= clientRepository.findAll();
