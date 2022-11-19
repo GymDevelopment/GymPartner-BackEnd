@@ -19,6 +19,12 @@ public interface AssignedRoutineRepository extends JpaRepository<AssignedRoutine
     @Transactional(readOnly = true)
     List<AssignedRoutine> findByClientId(Long clientId);
 
+    @Query("SELECT a FROM AssignedRoutine a WHERE a.client.id = ?1 ORDER BY a.date")
+    List<AssignedRoutine> findByClientIdJPQL(Long clientId);
+
+    @Query(value = "SELECT * FROM assigned_routines WHERE client_id = ?1 AND done = true AND date BETWEEN CURRENT_DATE - 7 AND CURRENT_DATE ORDER BY date;", nativeQuery = true)
+    List<AssignedRoutine> findByClientIdSQLReport(Long clientId);
+
 
     @Query("SELECT a.routine FROM AssignedRoutine a WHERE a.client.id = ?1")
     List<Routine> findAllRoutinesByClientIdJPQL(Long clientId);

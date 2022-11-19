@@ -52,8 +52,10 @@ public class AssignedRoutineExcelExporter {
             cell.setCellValue((Integer) value);
         } else if(value instanceof Boolean) {
             cell.setCellValue((Boolean) value);
-        } else {
+        }  else if(value instanceof String) {
             cell.setCellValue((String) value);
+        } else {
+            cell.setCellValue(value.toString());
         }
 
         cell.setCellStyle(style);

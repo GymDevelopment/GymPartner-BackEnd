@@ -52,7 +52,7 @@ public class ClientController {
     }
 
     @Transactional(readOnly = true)
-    @GetMapping("coaches/{coachId}/assignedRoutine/export/excel")
+    @GetMapping("/coaches/{coachId}/assignedRoutine/export/excel")
     public void exportToExcel(HttpServletResponse response, @PathVariable("coachId") Long coachId) throws IOException {
 
         response.setContentType("application/octet-stream");
@@ -62,9 +62,7 @@ public class ClientController {
         response.setHeader(headerKey, headerValue);
 
         List<Client> clients = clientRepository.findByCoachId(coachId);
-
         ClientExcelExporter excelExporter = new ClientExcelExporter(clients);
-
         excelExporter.export(response);
     }
     @Transactional (readOnly = true)

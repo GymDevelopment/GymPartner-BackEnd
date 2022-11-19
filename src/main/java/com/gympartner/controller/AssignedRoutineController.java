@@ -40,6 +40,15 @@ public class AssignedRoutineController {
         return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
     }
 
+    @GetMapping("/clients/{clientId}/assignedRoutineReport")
+    public ResponseEntity<List<AssignedRoutine>> getAllAssignedRoutinesByClientIdReport(@PathVariable("clientId") Long clientId){
+        if(!clientRepository.existsById(clientId)){
+            throw new ResourceNotFoundException("No found client with id = " + clientId);
+        }
+        List<AssignedRoutine> assignedRoutines = assignedRoutineRepository.findByClientIdSQLReport(clientId);
+        return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
+    }
+
     @GetMapping("/clients/{clientId}/routine")
     public ResponseEntity<List<Routine>> getAllRoutinesByClientId(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){

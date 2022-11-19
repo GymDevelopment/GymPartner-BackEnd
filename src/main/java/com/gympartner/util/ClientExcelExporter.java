@@ -12,6 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ClientExcelExporter {
@@ -57,8 +58,10 @@ public class ClientExcelExporter {
             cell.setCellValue((Integer) value);
         } else if(value instanceof Boolean) {
             cell.setCellValue((Boolean) value);
-        } else {
+        }  else if(value instanceof String) {
             cell.setCellValue((String) value);
+        } else {
+            cell.setCellValue(value.toString());
         }
 
         cell.setCellStyle(style);
@@ -74,7 +77,7 @@ public class ClientExcelExporter {
         font.setFontHeight(14);
         style.setFont(font);
 
-        for( Client result: clients) {
+        for(Client result: clients) {
 
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;

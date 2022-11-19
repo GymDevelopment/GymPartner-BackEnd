@@ -40,8 +40,12 @@ public class Diet {
     @JoinColumn(name = "coach_id", nullable = false)
     private Coach coach;
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column( name ="picture", nullable = false)
+    private byte[] picture;
 
-    public Diet(String name, String meal, String indication, Integer calories, Integer hour, String mealType, Coach coach) {
+    public Diet(String name, String meal, String indication, Integer calories, Integer hour, String mealType, byte[] picture) {
         this.name = name;
         this.meal = meal;
         this.indication = indication;
@@ -49,5 +53,6 @@ public class Diet {
         this.hour = hour;
         this.mealType = mealType;
         this.coach = coach;
+        this.picture = picture;
     }
 }
