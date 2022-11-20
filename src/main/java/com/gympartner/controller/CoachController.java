@@ -6,6 +6,7 @@ import com.gympartner.repository.CoachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,16 +17,19 @@ import java.util.List;
 public class CoachController {
     @Autowired
     private CoachRepository coachRepository;
+    @Transactional
     @PostMapping("/coaches")
     public ResponseEntity<Coach> createCoach(@RequestBody Coach coach){
         Coach newCoach = coachRepository.save(coach);
         return new ResponseEntity<>(newCoach, HttpStatus.CREATED);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/coaches")
     public ResponseEntity<List<Coach>> getAllCoaches(){
         List<Coach> coaches = coachRepository.findAll();
         return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/coaches/{id}")
     public ResponseEntity<Coach> getCoachById(@PathVariable("id") Long id){
         Coach newCoach = coachRepository.findById(id)

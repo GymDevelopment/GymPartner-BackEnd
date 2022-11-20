@@ -19,12 +19,14 @@ public class GymController {
     @Autowired
     private GymRepository gymRepository;
 
+    @Transactional(readOnly = true)
     @GetMapping("/gyms")
     public ResponseEntity<List<Gym>> getAllGyms(){
         List<Gym> gyms = gymRepository.findAll();
         return new ResponseEntity<>(gyms, HttpStatus.OK);
     }
 
+    @Transactional
     @PostMapping("/gyms")
     public ResponseEntity<Gym> createGym(@RequestBody Gym gym){
         Gym newGym = gymRepository.save(gym);

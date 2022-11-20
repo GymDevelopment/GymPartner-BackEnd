@@ -31,6 +31,7 @@ public class AssignedRoutineController {
     @Autowired
     private RoutineRepository routineRepository;
 
+    @Transactional(readOnly = true)
     @GetMapping("/clients/{clientId}/assignedRoutine")
     public ResponseEntity<List<AssignedRoutine>> getAllAssignedRoutinesByClientId(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){
@@ -40,6 +41,7 @@ public class AssignedRoutineController {
         return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/clients/{clientId}/assignedRoutineReport")
     public ResponseEntity<List<AssignedRoutine>> getAllAssignedRoutinesByClientIdReport(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){
@@ -49,6 +51,7 @@ public class AssignedRoutineController {
         return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/clients/{clientId}/routine")
     public ResponseEntity<List<Routine>> getAllRoutinesByClientId(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){
@@ -57,6 +60,7 @@ public class AssignedRoutineController {
         List<Routine> routines = assignedRoutineRepository.findAllRoutinesByClientIdJPQL(clientId);
         return new ResponseEntity<>(routines, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/routines/{routineId}/client")
     public ResponseEntity<List<Client>> getAllClientsByRoutineId(@PathVariable("routineId") Long routineId){
         if(!routineRepository.existsById(routineId)){
@@ -65,23 +69,26 @@ public class AssignedRoutineController {
         List<Client> clients = assignedRoutineRepository.findAllClientsByRoutineIdJPQL(routineId);
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/assignedRoutines/{id}")
     public ResponseEntity<AssignedRoutine> getAssignedRoutineById(@PathVariable("id") Long id){
         AssignedRoutine assignedRoutine = assignedRoutineRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("No found assignedRoutine with id = " + id));
         return new ResponseEntity<>(assignedRoutine, HttpStatus.OK);
     }
-
+    @Transactional
     @PostMapping("/assignedRoutines")
     public ResponseEntity<AssignedRoutine> createAssignedRoutine(@RequestBody AssignedRoutine assignedRoutine){
         AssignedRoutine newAssignedRoutine = assignedRoutineRepository.save(assignedRoutine);
         return new ResponseEntity<>(newAssignedRoutine, HttpStatus.CREATED);
     }
+    @Transactional
     @PutMapping("/assignedRoutines/{id}")
     public ResponseEntity<AssignedRoutine> updateAssignedRoutine(@PathVariable("id") Long id, @RequestBody AssignedRoutine assignedRoutine){
         AssignedRoutine newAssignedRoutine = assignedRoutineRepository.save(assignedRoutine);
         return new ResponseEntity<>(newAssignedRoutine, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/clients/{clientId}/routineToday")
     public ResponseEntity<List<Routine>> getAllRoutinesByClientIdToday(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){
@@ -91,6 +98,7 @@ public class AssignedRoutineController {
         List<Routine> routines = assignedRoutineRepository.findAllRoutinesByClientIdJPQLToday(clientId);
         return new ResponseEntity<>(routines, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/clients/{clientId}/todayAssignedRoutines")
     public ResponseEntity<List<AssignedRoutine>> getAllTodayAssignedRoutinesByClientId(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){
@@ -99,6 +107,7 @@ public class AssignedRoutineController {
         List<AssignedRoutine> assignedRoutines = assignedRoutineRepository.findAllTodayAssignedRoutinesByClientIdJPQL(clientId);
         return new ResponseEntity<>(assignedRoutines, HttpStatus.OK);
     }
+    @Transactional(readOnly = true)
     @GetMapping("/clients/{clientId}/futureAssignedRoutines")
     public ResponseEntity<List<AssignedRoutine>> getAllFutureAssignedRoutinesByClientId(@PathVariable("clientId") Long clientId){
         if(!clientRepository.existsById(clientId)){
