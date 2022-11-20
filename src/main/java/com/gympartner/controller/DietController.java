@@ -63,6 +63,7 @@ public class DietController {
                 mealType,
                 Util.compressZLib(picture.getBytes())
         );
+        System.out.println("diet = " + diet);
         if(coach!=null) {
             diet.setCoach(coach);
         }
@@ -99,6 +100,46 @@ public class DietController {
         }
         System.out.println("diet: "+diet);
         return new ResponseEntity<>(diet,HttpStatus.OK);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/coach/{coachId}/breakfast")
+    public ResponseEntity<List<Diet>> getAllBreakfastByCoachId(@PathVariable("coachId") Long coachId){
+        List<Diet> diets = new ArrayList<>();
+        if(coachId == -1){
+            diets = dietRepository.findAllBreakfastJPQL();
+        } else if (!coachRepository.existsById(coachId)) {
+            throw new ResourceNotFoundException("No found coach with id = " + coachId);
+        } else{
+            diets = dietRepository.findAllBreakfastByCoachIdJPQL(coachId);
+        }
+        return new ResponseEntity<>(diets, HttpStatus.OK);
+    }
+    @Transactional(readOnly = true)
+    @GetMapping("/coach/{coachId}/lunch")
+    public ResponseEntity<List<Diet>> getAllLunchByCoachId(@PathVariable("coachId") Long coachId){
+        List<Diet> diets = new ArrayList<>();
+        if(coachId == -1){
+            diets = dietRepository.findAllLunchJPQL();
+        } else if (!coachRepository.existsById(coachId)) {
+            throw new ResourceNotFoundException("No found coach with id = " + coachId);
+        } else{
+            diets = dietRepository.findAllLunchByCoachIdJPQL(coachId);
+        }
+        return new ResponseEntity<>(diets, HttpStatus.OK);
+    }
+    @Transactional(readOnly = true)
+    @GetMapping("/coach/{coachId}/dinner")
+    public ResponseEntity<List<Diet>> getAllDinnerByCoachId(@PathVariable("coachId") Long coachId){
+        List<Diet> diets = new ArrayList<>();
+        if(coachId == -1){
+            diets = dietRepository.findAllDinnerJPQL();
+        } else if (!coachRepository.existsById(coachId)) {
+            throw new ResourceNotFoundException("No found coach with id = " + coachId);
+        } else{
+            diets = dietRepository.findAllDinnerByCoachIdJPQL(coachId);
+        }
+        return new ResponseEntity<>(diets, HttpStatus.OK);
     }
 
 }

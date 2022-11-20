@@ -3,8 +3,6 @@ package com.gympartner.dto;
 import com.gympartner.entities.Gym;
 import lombok.*;
 
-import javax.persistence.Column;
-
 @Getter
 @Setter
 @Builder

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -23,6 +24,8 @@ import java.util.List;
 public class AssignedDietController {
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private ClientRepository coachRepository;
     @Autowired
     private AssignedDietRepository assignedDietRepository;
     @Transactional(readOnly = true)
@@ -34,33 +37,6 @@ public class AssignedDietController {
         List<AssignedDiet> assignedDiets = assignedDietRepository.findByClientId(clientId);
         return new ResponseEntity<>(assignedDiets, HttpStatus.OK);
     }
-    @Transactional(readOnly = true)
-    @GetMapping("/clients/{clientId}/breakfast")
-    public ResponseEntity<List<Diet>> getAllBreakfastByClientId(@PathVariable("clientId") Long clientId){
-        if(!clientRepository.existsById(clientId)){
-            throw new ResourceNotFoundException("No found client with id = " + clientId);
-        }
-        List<Diet> diets = assignedDietRepository.findAllBreakfastByClientIdJPQL(clientId);
-        return new ResponseEntity<>(diets, HttpStatus.OK);
-    }
-    @Transactional(readOnly = true)
-    @GetMapping("/clients/{clientId}/lunch")
-    public ResponseEntity<List<Diet>> getAllLunchByClientId(@PathVariable("clientId") Long clientId){
-        if(!clientRepository.existsById(clientId)){
-            throw new ResourceNotFoundException("No found client with id = " + clientId);
-        }
-        List<Diet> diets = assignedDietRepository.findAllLunchByClientIdJPQL(clientId);
-        return new ResponseEntity<>(diets, HttpStatus.OK);
-    }
-    @Transactional(readOnly = true)
-    @GetMapping("/clients/{clientId}/dinner")
-    public ResponseEntity<List<Diet>> getAllDinnerByClientId(@PathVariable("clientId") Long clientId){
-        if(!clientRepository.existsById(clientId)){
-            throw new ResourceNotFoundException("No found client with id = " + clientId);
-        }
-        List<Diet> diets = assignedDietRepository.findAllDinnerByClientIdJPQL(clientId);
-        return new ResponseEntity<>(diets, HttpStatus.OK);
-    }
     @Transactional
     @PostMapping("/assignedDiets")
     public ResponseEntity<AssignedDiet> createAssignedDiet(@RequestBody AssignedDiet assignedDiet){
@@ -70,12 +46,13 @@ public class AssignedDietController {
 
     @Transactional(readOnly = true)
     @GetMapping("/assignedDietsTodayByClientId/{clientId}")
-    public ResponseEntity<AssignedDiet> getAssignedDietsTodayByClientId(@PathVariable("clientId") Long clientId){
+    public ResponseEntity<List<AssignedDiet>> getAssignedDietsTodayByClientId(@PathVariable("clientId") Long clientId){
 
         if(!clientRepository.existsById(clientId)){
             throw new ResourceNotFoundException("No found client with id = " + clientId);
         }
-        AssignedDiet diets = assignedDietRepository.findAssignedDietByClientIdJPQL(clientId);
+        List<AssignedDiet> diets = assignedDietRepository.findAssignedDietByClientIdJPQL(clientId);
+        System.out.println(diets);
         return new ResponseEntity<>(diets, HttpStatus.OK);
     }
 

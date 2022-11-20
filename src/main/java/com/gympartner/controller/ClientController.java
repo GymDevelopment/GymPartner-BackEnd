@@ -1,5 +1,9 @@
 package com.gympartner.controller;
 
+import com.gympartner.converter.ClientConverter;
+import com.gympartner.dto.ClientResponseDTO;
+import com.gympartner.dto.ConsultClientDTO;
+import com.gympartner.dto.LoginRequestDTO;
 import com.gympartner.entities.AssignedRoutine;
 import com.gympartner.entities.Client;
 import com.gympartner.exception.ResourceNotFoundException;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,6 +30,13 @@ public class ClientController {
 
     @Autowired
     private CoachRepository coachRepository;
+
+    private final ClientConverter clientConverter;
+
+    public ClientController(ClientConverter clientConverter) {
+        this.clientConverter = clientConverter;
+    }
+
     @Transactional
     @PostMapping("/clients")
     public ResponseEntity<Client> createClient(@RequestBody Client client){
@@ -74,4 +86,30 @@ public class ClientController {
         List<Client> clients = clientRepository.search(coachId, name, lastName);
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
+
+    @Transactional(readOnly = true)
+    @PostMapping("/client/signIn")
+    public ResponseEntity<ClientResponseDTO> signInClient(@RequestBody LoginRequestDTO request) {
+        Client clientSignIn=clientRepository
+                .findByEmailAndPassword(request.getEmail(), request.getPassword())
+                .orElseThrow(()-> new ResourceNotFoundException("Email y/o password incorrectos"));
+        ClientResponseDTO response=clientConverter.convertEntityToDto(clientSignIn);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Transactional (readOnly = true)
+    @GetMapping("/client/callProcedure")
+    public ResponseEntity<List<ConsultClientDTO>> callProcOrFunction(){
+        List<ConsultClientDTO> consults = new ArrayList<>();
+        clientRepository.callProcedureOrFunction().forEach(x -> {
+            ConsultClientDTO dto = new ConsultClientDTO();
+            dto.setPhysicalState((String) x[0]);
+            dto.setQuantity((Integer) x[1]);
+            dto.setRoutineDuration((Integer) x[2]);
+            dto.setAverageAge((Double) x[3]);
+            consults.add(dto);
+        });
+        return new ResponseEntity<>(consults, HttpStatus.OK);
+    }
+
 }

@@ -25,4 +25,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Optional<Client> findByEmailAndPassword(String email, String password);
 
+    @Query(value = "select * from fn_physical_state_report()", nativeQuery = true)
+    List<Object[]> callProcedureOrFunction();
+
 }
