@@ -52,7 +52,6 @@ public class Diet {
         this.calories = calories;
         this.hour = hour;
         this.mealType = mealType;
-        this.coach = coach;
         this.picture = picture;
     }
 }

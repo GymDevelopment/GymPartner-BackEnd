@@ -87,4 +87,18 @@ public class DietController {
         return new ResponseEntity<>(diets, HttpStatus.OK);
     }
 
+    @GetMapping("/diets/{id}")
+    @Transactional (readOnly = true)
+    public ResponseEntity<Diet> searchById(@PathVariable("id") Long id){
+        Diet diet=dietRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Not found diet with id="+id));
+
+        if(diet!=null){
+            byte[] imageDescompressed = Util.decompressZLib(diet.getPicture());
+            diet.setPicture(imageDescompressed);
+        }
+        System.out.println("diet: "+diet);
+        return new ResponseEntity<>(diet,HttpStatus.OK);
+    }
+
 }

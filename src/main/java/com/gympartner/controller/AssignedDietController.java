@@ -68,6 +68,15 @@ public class AssignedDietController {
         return new ResponseEntity<>(newAssignedDiet, HttpStatus.CREATED);
     }
 
+    @Transactional(readOnly = true)
+    @GetMapping("/assignedDietsTodayByClientId/{clientId}")
+    public ResponseEntity<AssignedDiet> getAssignedDietsTodayByClientId(@PathVariable("clientId") Long clientId){
 
+        if(!clientRepository.existsById(clientId)){
+            throw new ResourceNotFoundException("No found client with id = " + clientId);
+        }
+        AssignedDiet diets = assignedDietRepository.findAssignedDietByClientIdJPQL(clientId);
+        return new ResponseEntity<>(diets, HttpStatus.OK);
+    }
 
 }

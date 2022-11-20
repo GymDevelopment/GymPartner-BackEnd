@@ -14,7 +14,8 @@ public interface AssignedDietRepository extends JpaRepository<AssignedDiet, Long
     @Transactional(readOnly = true)
     List<AssignedDiet> findByClientId(Long clientId);
 
-
+    @Query("SELECT a FROM AssignedDiet a WHERE a.client.id = ?1 AND a.date = CURRENT_DATE")
+    AssignedDiet findAssignedDietByClientIdJPQL(Long clientId);
 
     @Query("SELECT a.breakfast FROM AssignedDiet a WHERE a.client.id = ?1")
     List<Diet> findAllBreakfastByClientIdJPQL(Long clientId);
