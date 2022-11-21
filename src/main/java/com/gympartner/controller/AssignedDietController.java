@@ -40,6 +40,7 @@ public class AssignedDietController {
     @Transactional
     @PostMapping("/assignedDiets")
     public ResponseEntity<AssignedDiet> createAssignedDiet(@RequestBody AssignedDiet assignedDiet){
+        System.out.println("assignedDiet: " + assignedDiet);
         AssignedDiet newAssignedDiet = assignedDietRepository.save(assignedDiet);
         return new ResponseEntity<>(newAssignedDiet, HttpStatus.CREATED);
     }
@@ -52,7 +53,7 @@ public class AssignedDietController {
             throw new ResourceNotFoundException("No found client with id = " + clientId);
         }
         List<AssignedDiet> diets = assignedDietRepository.findAssignedDietByClientIdJPQL(clientId);
-        System.out.println(diets);
+
         return new ResponseEntity<>(diets, HttpStatus.OK);
     }
 

@@ -42,16 +42,16 @@ public class DietController {
  */
     @PostMapping("/diets")
     @Transactional
-    //public ResponseEntity<Product> save(@RequestBody Product product) {
-    public ResponseEntity<Diet> save(   @RequestParam("name") String name,
+    public ResponseEntity<Diet> save(   @RequestParam("picture") MultipartFile picture,
+                                         @RequestParam("name") String name,
                                         @RequestParam("meal") String meal,
                                         @RequestParam("indication") String indication,
                                         @RequestParam("calories") Integer calories,
                                         @RequestParam("hour") Integer hour,
                                         @RequestParam("mealType") String mealType,
-                                        @RequestParam("coachId") Long coachId,
-                                        @RequestParam("picture") MultipartFile picture) throws IOException {
-
+                                        @RequestParam("coachId") Long coachId
+                                        ) throws IOException {
+        System.out.println("name: " + name);
         Coach coach = coachRepository.findById(coachId)
                 .orElseThrow(()-> new ResourceNotFoundException("Not found coach with id="+coachId));
         Diet diet = new Diet(
@@ -63,7 +63,6 @@ public class DietController {
                 mealType,
                 Util.compressZLib(picture.getBytes())
         );
-        System.out.println("diet = " + diet);
         if(coach!=null) {
             diet.setCoach(coach);
         }
@@ -98,7 +97,6 @@ public class DietController {
             byte[] imageDescompressed = Util.decompressZLib(diet.getPicture());
             diet.setPicture(imageDescompressed);
         }
-        System.out.println("diet: "+diet);
         return new ResponseEntity<>(diet,HttpStatus.OK);
     }
 
